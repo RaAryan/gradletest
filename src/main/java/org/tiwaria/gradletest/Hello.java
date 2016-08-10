@@ -39,29 +39,28 @@ public class Hello {
         capabilities.setCapability("platformName", "Android");
         capabilities.setCapability("appPackage", "launcher3.android.com.hivelauncher");
         capabilities.setCapability("appActivity", "com.android.launcher3.Launcher");
-        dr.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
         dr = new AndroidDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
+        dr.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
 
         EagleTesterArgument eagleTesterArgument = new EagleTesterArgument();
         eagleTesterArgument.setArguments(EagleTesterArgument.PACKAGE_NAME, "launcher3.android.com.hivelauncher");
-        EagleTester eagleTester = new EagleTester(driver, eagleTesterArgument);
+        eagleTester = new EagleTester(driver, eagleTesterArgument);
     }
 
     @Test
-    public void setup() throws Exception {
+    public void setup2() throws Exception {
         eagleTester.startMeasure();
         try {
             dr.findElement(By.id("launcher3.android.com.hivelauncher:id/layout")).click();
-            dr.findElement(By.name("Calendar    ")).click();
+            dr.findElement(By.name("Calendar")).click();
             dr.navigate().back();
             Thread.sleep(5000);
             System.out.println("The Animation test cases successfully pass");
         } catch (Exception e) {
             count = count + 1;
-            System.out.println("The Animations test cases fails" + count);
+            System.out.println("The Animations test cases fails " + count + e.getMessage());
             delayTest();
             eagleTester.stopMeasure();
-
         }
     }
 
